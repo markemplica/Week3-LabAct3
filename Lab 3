@@ -1,0 +1,76 @@
+<?php
+
+class Vehicle {
+    protected $make;
+    protected $model;
+    protected $year;
+
+    public function __construct($make, $model, $year) {
+        $this->make = $make;
+        $this->model = $model;
+        $this->year = $year;
+    }
+    final public function getDetails(): string {
+        return "{$this->make}, {$this->model}, {$this->year}";
+    }
+    public function describe(): string {
+        return "This is a vehicle.";
+    }
+}
+
+class Car extends Vehicle {
+    protected $numberOfDoors;
+
+    public function __construct($make, $model, $year, $numberOfDoors) {
+        parent::__construct($make, $model, $year);
+        $this->numberOfDoors = $numberOfDoors;
+    }
+    public function describe(): string {
+        return "This is a car with {$this->numberOfDoors} doors.";
+    }
+}
+
+final class Motorcycle extends Vehicle {
+    
+    public function describe(): string {
+        return "This is a motorcycle.";
+    }
+}
+
+interface ElectricVehicle {
+    public function chargeBattery(): string;
+}
+
+class ElectricCar extends Car implements ElectricVehicle {
+    private $batteryLevel;
+
+    public function __construct($make, $model, $year, $numberOfDoors, $batteryLevel = 100) {
+        parent::__construct($make, $model, $year, $numberOfDoors);
+        $this->batteryLevel = $batteryLevel;
+    }
+
+    public function chargeBattery(): string {
+        $this->batteryLevel = 100;
+        return "The battery is fully charged.";
+    }
+
+    public function describe(): string {
+        return "This is an electric car. Battery level: {$this->batteryLevel}%";
+    }
+}
+
+$car = new Car("Nissan", "JT-R35", 2022, 4);
+echo $car->getDetails() . PHP_EOL;
+echo $car->describe() . PHP_EOL . PHP_EOL;
+
+$motorcycle = new Motorcycle("Honda", "CBR", 2021);
+echo $motorcycle->getDetails() . PHP_EOL;
+echo $motorcycle->describe() . PHP_EOL. PHP_EOL;
+
+$electricCar = new ElectricCar("Tesla", "Model Y", 2024, 4);
+echo $electricCar->getDetails() . PHP_EOL;
+echo $electricCar->describe() . PHP_EOL;
+echo $electricCar->chargeBattery() . PHP_EOL. PHP_EOL;
+?>
+
+J
